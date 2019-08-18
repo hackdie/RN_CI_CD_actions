@@ -8,18 +8,36 @@
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-native": "0.60.4"
+    "react-native": "0.60.5"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/runtime": "^7.5.0",
     "@react-native-community/eslint-config": "^0.0.3",
     "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
+    "detox": "^14.0.2",
+    "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.54.1",
     "react-test-renderer": "16.8.6"
   },
   "jest": {
     "preset": "react-native"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/CI_CD.app",
+        "build": "set -o pipefail && xcodebuild -workspace ios/CI_CD.xcworkspace -UseNewBuildSystem=NO -scheme CI_CD -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build  -quiet | xcpretty",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
+      "ios.sim.release": {
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/CI_CD.app",
+        "build": "set -o pipefail && xcodebuild -workspace ios/CI_CD.xcworkspace -UseNewBuildSystem=NO -scheme CI_CD -configuration Release -sdk iphonesimulator -derivedDataPath ios/build  -quiet | xcpretty",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      }
+    },
+    "test-runner": "jest"
   }
 }

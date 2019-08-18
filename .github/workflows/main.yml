@@ -1,18 +1,41 @@
-name: CI
+name: Detox App ios CI
 
-on: [push]
+on:
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
+    runs-on: macOS-latest
 
-    runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@master
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
+    - uses: actions/setup-node@v1
+      with:
+          version: '10.x'
+
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Install extras
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
-        echo test, and deploy your project.
+        sudo gem update --system
+        sudo gem install bundle
+        brew update
+        brew tap wix/brew
+        brew install wix/brew/applesimutils
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        brew config
+        npm install -g react-native-cli
+        npm install -g detox-cli
+        sudo gem install -n /usr/local/bin cocoapods
+        cd ios
+        pod update
+        pod install
+    - name: Build & Run Test
+      run: |
+        detox build --configuration ios.sim.release
+        detox test e2e/tests/forgot-password.spec.ts --configuration ios.sim.release --cleanup  --debug-synchronization 200
