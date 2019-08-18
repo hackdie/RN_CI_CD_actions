@@ -38,4 +38,4 @@ jobs:
     - name: Build & Run Test
       run: |
         detox build --configuration ios.sim.release
-        detox test e2e/tests/forgot-password.spec.ts --configuration ios.sim.release --cleanup  --debug-synchronization 200
+        detox test --configuration ios.sim.release --cleanup  --debug-synchronization 200

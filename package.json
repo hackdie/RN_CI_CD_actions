@@ -35,7 +35,7 @@
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/CI_CD.app",
         "build": "set -o pipefail && xcodebuild -workspace ios/CI_CD.xcworkspace -UseNewBuildSystem=NO -scheme CI_CD -configuration Release -sdk iphonesimulator -derivedDataPath ios/build  -quiet | xcpretty",
         "type": "ios.simulator",
-        "name": "iPhone X"
+        "name": "iPhone Xs"
       }
     },
     "test-runner": "jest"
